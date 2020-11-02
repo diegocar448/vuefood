@@ -1,6 +1,16 @@
 <template>
   <div>
-    asdsa
+    <ul>
+      <li>
+        <router-link :to="{ name: 'home' }"> Home </router-link>
+      </li>
+      <li>
+        <router-link :to="{ name: 'products' }"> Produtos </router-link>
+      </li>
+      <li>
+        <router-link :to="{ name: 'cart' }"> Carrinho </router-link>
+      </li>
+    </ul>
 
     <router-view></router-view>
   </div>
