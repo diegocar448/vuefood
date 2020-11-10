@@ -30,4 +30,5 @@ export default {
 <style scoped>
 @import url("../assets/css/vuefood.css");
 @import url("../assets/css/reset.css");
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 </style>
