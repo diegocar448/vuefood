@@ -18,6 +18,11 @@
                   <i class="fas fa-shopping-cart"></i> (2)
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'login' }" class="nav-link">
+                  Entrar
+                </router-link>
+              </li>
             </ul>
           </div>
         </div>
