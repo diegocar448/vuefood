@@ -4,7 +4,13 @@
     <div class="user_card">
       <div class="d-flex justify-content-center">
         <div class="brand_logo_container">
-          <img src="@/assets/imgs/vue-food.png" class="brand_logo" alt="Logo" />
+          <router-link :to="{ name: 'home' }">
+            <img
+              src="@/assets/imgs/vue-food.png"
+              class="brand_logo"
+              alt="Logo"
+            />
+          </router-link>
         </div>
       </div>
       <div class="d-flex justify-content-center form_container">
@@ -46,7 +52,9 @@
       <div class="mt-4">
         <div class="d-flex justify-content-center links">
           Não tem uma conta?
-          <a href="register.html" class="ml-2">Cadastre-se!</a>
+          <router-link :to="{ name: 'register' }" class="ml-2"
+            >Cadastre-se!</router-link
+          >
         </div>
       </div>
     </div>

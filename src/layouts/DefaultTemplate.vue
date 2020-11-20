@@ -27,7 +27,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 @import url("../assets/css/vuefood.css");
 @import url("../assets/css/reset.css");
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
