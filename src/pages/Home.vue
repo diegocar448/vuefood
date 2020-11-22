@@ -108,5 +108,18 @@
 </template>
 
 <script>
-export default {};
+/* 
+importar recurso do vuex que permite chamar as action(s) dentro do array
+*/
+import { mapActions } from "vuex";
+
+export default {
+  mounted() {
+    this.getCompanies();
+  },
+
+  methods: {
+    ...mapActions(["getCompanies"]),
+  },
+};
 </script>
