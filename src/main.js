@@ -9,7 +9,10 @@ import store from './store';
 Vue.config.productionTip = false
 
 
-
+/* 
+Componentes Globais (Registrando de forma Global)
+*/
+Vue.component('preloader-component', () => import('./components/Preloader'))
 
 
 new Vue({
