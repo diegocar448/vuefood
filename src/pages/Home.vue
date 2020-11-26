@@ -44,23 +44,28 @@
 <script>
 /* 
 importar recurso do vuex que permite chamar as action(s) dentro do array
+mapActions mapeia Actions e mapState mapeia estados
 */
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   mounted() {
-    this.getCompanies();
+    this.getCompanies()    
+        .catch(response => this.$vToastify.error("Falha ao carregar empresas", "Error"))
+    
   },
 
   computed: {
-    companies() {
-      console.log(this.$store.state.companies.items);
+    /* companies() {      
       return this.$store.state.companies.items;
-    },
+    }, */
+    ...mapState({
+      companies: state => state.companies.items
+    })
   },
 
   methods: {
-    ...mapActions(["getCompanies"]),
+    ...mapActions(['getCompanies']),
   },
 };
 </script>
