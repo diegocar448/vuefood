@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-lg-3">
-      <h1 class="my-4 title-tenant">Nome do Tenant</h1>
+      <h1 class="my-4 title-tenant">{{ company.name }}</h1>
       <div class="list-group">
         <a href="#" class="list-group-item active">Categoria 1</a>
         <a href="#" class="list-group-item">Categoria 2</a>
@@ -163,5 +163,26 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex'
+
+
+
+export default {
+  props:['companyFlag'],
+
+  created(){
+    /* Aqui ele verifica no Vuex se existe algum valor no companySelect caso não haja redireciona para a pagina inicial */
+    if(this.company.name === ''){
+      return this.$router.push({ name:'home' })
+    }
+  },
+
+  computed: {
+    ...mapState({
+      company:state => state.companies.companySelected,
+    }),
+  }
+
+  
+};
 </script>

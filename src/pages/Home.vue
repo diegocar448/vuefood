@@ -10,7 +10,7 @@
           :key="index"
         >
           <div class="restaurant-card">
-            <a href="vitrine-tenant.html"
+            <a href="#" @click.prevent="goStoreCompany(company)"
               ><img
                 v-if="company.image"
                 class="card-img-top"
@@ -26,9 +26,11 @@
             </a>
             <div class="restaurant-card-body">
               <h3>
-                <router-link :to="{ name: 'products' }">{{
+                <!-- <router-link :to="{ name: 'products', params: {companyFlag: company.flag}}">{{
                   company.name
-                }}</router-link>
+                }}</router-link> -->
+                <a href="#" @click.prevent="goStoreCompany(company)">
+                </a>
               </h3>
             </div>
           </div>
@@ -46,7 +48,7 @@
 importar recurso do vuex que permite chamar as action(s) dentro do array
 mapActions mapeia Actions e mapState mapeia estados
 */
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   mounted() {
@@ -66,6 +68,20 @@ export default {
 
   methods: {
     ...mapActions(['getCompanies']),
+
+    ...mapMutations({
+      setCompany:'SET_COMPANY_SELECTED'
+    }),
+
+    goStoreCompany(company){
+      /* Aqui ele vai setar a mutation companyFlag */
+      this.setCompany(company)
+
+      /* Aqui ele vai mover para a rota de produtos(loja) passando o parâmetro flag */
+      this.$router.push({ name:'products', params: { companyFlag: company.flag } })
+    }
   },
+
+
 };
 </script>
