@@ -26,11 +26,16 @@
             </a>
             <div class="restaurant-card-body">
               <h3>
-                <!-- <router-link :to="{ name: 'products', params: {companyFlag: company.flag}}">{{
+                <!-- <router-link
+                  :to="{
+                    name: 'products',
+                    params: { companyFlag: company.flag },
+                  }"
+                  >{{ company.name }}</router-link
+                > -->
+                <a href="#" @click.prevent="goStoreCompany(company)">{{
                   company.name
-                }}</router-link> -->
-                <a href="#" @click.prevent="goStoreCompany(company)">
-                </a>
+                }}</a>
               </h3>
             </div>
           </div>
@@ -52,9 +57,9 @@ import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   mounted() {
-    this.getCompanies()    
-        .catch(response => this.$vToastify.error("Falha ao carregar empresas", "Error"))
-    
+    this.getCompanies().catch((response) =>
+      this.$vToastify.error("Falha ao carregar empresas", "Error")
+    );
   },
 
   computed: {
@@ -62,26 +67,27 @@ export default {
       return this.$store.state.companies.items;
     }, */
     ...mapState({
-      companies: state => state.companies.items
-    })
+      companies: (state) => state.companies.items,
+    }),
   },
 
   methods: {
-    ...mapActions(['getCompanies']),
+    ...mapActions(["getCompanies"]),
 
     ...mapMutations({
-      setCompany:'SET_COMPANY_SELECTED'
+      setCompany: "SET_COMPANY_SELECTED",
     }),
 
-    goStoreCompany(company){
+    goStoreCompany(company) {
       /* Aqui ele vai setar a mutation companyFlag */
-      this.setCompany(company)
+      this.setCompany(company);
 
       /* Aqui ele vai mover para a rota de produtos(loja) passando o parâmetro flag */
-      this.$router.push({ name:'products', params: { companyFlag: company.flag } })
-    }
+      this.$router.push({
+        name: "products",
+        params: { companyFlag: company.flag },
+      });
+    },
   },
-
-
 };
 </script>
