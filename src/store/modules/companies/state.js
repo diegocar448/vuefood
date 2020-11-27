@@ -3,8 +3,13 @@ const state = {
         data: []
     },
     companySelected: {
-        name: ''
+        name: '',
+    },
+
+    categoriesCompanySelected: {
+        data: []
     }
+
 }
 
 export default state
