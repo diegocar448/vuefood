@@ -5,6 +5,7 @@ export default {
 
     SET_COMPANY_SELECTED(state, company) {
         //state.companySelected = company
+        /* Usamos o Obhject.assing para mesclar valores antigos e novos, mantendo a estrutura completa e atualizada */
         state.companySelected = Object.assign(state.companySelected, company)
     },
 

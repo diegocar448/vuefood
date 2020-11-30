@@ -8,6 +8,7 @@
           class="list-group-item active"
           v-for="(category, index) in categories.data"
           :key="index"
+          @click.prevent="filterByCategory(category)"
         >
           {{ category.name }}
         </a>
@@ -17,6 +18,8 @@
 
     <div class="col-lg-9">
       <div class="row my-4">
+        <div v-if="company.products.data.length === 0">Nenhum Produto</div>
+
         <div
           class="col-lg-4 col-md-6 mb-4"
           v-for="(product, index) in company.products.data"
@@ -73,9 +76,11 @@ export default {
       this.$vToastify.error("Falha ao carregar as categorias", "Error")
     );
 
-    this.getProductsByCompany(this.company.uuid).catch((response) =>
+    this.loadProducts();
+
+    /* this.getProductsByCompany(this.company.uuid).catch((response) =>
       this.$vToastify.error("Falha ao carregar os produtos", "Error")
-    );
+    ); */
   },
 
   computed: {
@@ -86,8 +91,36 @@ export default {
     }),
   },
 
+  data() {
+    return {
+      filters: {
+        category: "",
+      },
+    };
+  },
+
   methods: {
     ...mapActions(["getCategoriesByCompany", "getProductsByCompany"]),
+
+    loadProducts() {
+      const params = {
+        token_company: this.company.uuid,
+      };
+
+      if (this.filters.category) {
+        params.categories = [this.filters.category];
+      }
+
+      this.getProductsByCompany(params).catch((response) =>
+        this.$vToastify.error("Falha ao carregar os produtos", "Error")
+      );
+    },
+
+    filterByCategory(category) {
+      this.filters.category = category.identify;
+
+      this.loadProducts();
+    },
   },
 };
 </script>
