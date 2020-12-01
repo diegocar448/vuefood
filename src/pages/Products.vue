@@ -3,12 +3,15 @@
     <div class="col-lg-3">
       <h1 class="my-4 title-tenant">{{ company.name }}</h1>
       <div class="list-group">
+        <a href="#" :class="['list-group-item', categoryInFilter('')]">
+          Todas
+        </a>
         <a
           href="#"
-          class="list-group-item active"
           v-for="(category, index) in categories.data"
           :key="index"
-          @click.prevent="filterByCategory(category)"
+          :class="['list-group-item', categoryInFilter(category.identify)]"
+          @click.prevent="filterByCategory(category.identify)"
         >
           {{ category.name }}
         </a>
@@ -116,10 +119,15 @@ export default {
       );
     },
 
-    filterByCategory(category) {
-      this.filters.category = category.identify;
+    filterByCategory(identify) {
+      this.filters.category = identify;
 
       this.loadProducts();
+    },
+
+    /* Verificar se a categoria esta no filtro para aplicar flag active */
+    categoryInFilter(identify) {
+      return identify === this.filters.category ? "active" : "";
     },
   },
 };
