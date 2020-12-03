@@ -28,7 +28,8 @@
           v-for="(product, index) in company.products.data"
           :key="index"
         >
-          <div class="card h-100">
+          <!-- se retornar true ele vai adicionar automaticamente a classe disabled  -->
+          <div :class="['card', 'h-100', { disabled: productInCart(product) }]">
             <a href="#"
               ><img
                 class="card-img-top"
@@ -45,13 +46,9 @@
               </p>
             </div>
             <div class="card-footer card-footer-custom">
-              <!-- <a href="carrinho.html"
-                >Adicionar no Carrinho <i class="fas fa-cart-plus"></i
-              ></a> -->
-
-              <router-link :to="{ name: 'cart' }">
+              <a href="#" @click.prevent="addProdCart(product)">
                 Adicionar no Carrinho <i class="fas fa-cart-plus"></i>
-              </router-link>
+              </a>
             </div>
           </div>
         </div>
@@ -64,7 +61,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["companyFlag"],
@@ -91,6 +88,8 @@ export default {
       company: (state) => state.companies.companySelected,
       /* Listagem das categorias */
       categories: (state) => state.companies.categoriesCompanySelected,
+      /* Quantidade de produtos no carrinho */
+      productsCart: (state) => state.cart.products,
     }),
   },
 
@@ -104,6 +103,9 @@ export default {
 
   methods: {
     ...mapActions(["getCategoriesByCompany", "getProductsByCompany"]),
+    ...mapMutations({
+      addProdCart: "ADD_PRODUCT_CART",
+    }),
 
     loadProducts() {
       const params = {
@@ -128,6 +130,18 @@ export default {
     /* Verificar se a categoria esta no filtro para aplicar flag active */
     categoryInFilter(identify) {
       return identify === this.filters.category ? "active" : "";
+    },
+
+    productInCart(product) {
+      let inCart = false;
+
+      productsCart.map((prodCart, index) => {
+        if (prodCart.identify === product.identify) {
+          inCart = true;
+        }
+      });
+
+      return inCart;
     },
   },
 };
