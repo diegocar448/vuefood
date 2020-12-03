@@ -30,6 +30,7 @@
         >
           <!-- se retornar true ele vai adicionar automaticamente a classe disabled  -->
           <div :class="['card', 'h-100', { disabled: productInCart(product) }]">
+            <!-- <div class="card h-100"> -->
             <a href="#"
               ><img
                 class="card-img-top"
@@ -135,7 +136,7 @@ export default {
     productInCart(product) {
       let inCart = false;
 
-      productsCart.map((prodCart, index) => {
+      this.productsCart.map((prodCart, index) => {
         if (prodCart.identify === product.identify) {
           inCart = true;
         }
