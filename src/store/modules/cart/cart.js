@@ -19,7 +19,7 @@ export default {
             })
         },
 
-        INCREMENT_QTY_PROD_CART(cart, product) {
+        INCREMENT_QTY_PROD_CART(state, product) {
             state.products = state.products.map((prodCart, index) => {
                 if (prodCart.identify === product.identify) {
                     state.products[index].qty++
@@ -29,7 +29,7 @@ export default {
             })
         },
 
-        DECREMENT_QTY_PROD_CART(cart, product) {
+        DECREMENT_QTY_PROD_CART(state, product) {
             state.products = state.products.filter((prodCart, index) => {
                 if (prodCart.identify === product.identify) {
                     state.products[index].qty = state.products[index].qty - 1

@@ -3,15 +3,18 @@
   <div class="card shopping-cart my-4">
     <div class="card-header text-light">
       <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-      Carrinho de Compras
-      <a href="" class="btn btn-outline-info btn-sm pull-right"
-        >Continuar Comprando</a
+      Continuar Comprando:
+      <router-link
+        :to="{ name: 'home' }"
+        class="btn btn-outline-info btn-sm pull-right"
       >
+        Continuar Comprando
+      </router-link>
       <div class="clearfix"></div>
     </div>
     <div class="card-body">
       <!-- PRODUCT -->
-      <!-- <div class="row" v-for="(item, index) in products" :key="index">
+      <div class="row" v-for="(item, index) in products" :key="index">
         <div class="col-12 col-sm-12 col-md-2 text-center">
           <img
             class="img-responsive"
@@ -43,32 +46,47 @@
           </div>
           <div class="col-4 col-sm-4 col-md-4">
             <div class="quantity">
-              <input type="button" value="+" class="plus" />
+              <input
+                type="button"
+                value="+"
+                class="plus"
+                @click.prevent="incrementQty(item.product)"
+              />
               <input
                 type="number"
                 step="1"
                 max="99"
                 min="1"
-                value="1"
                 title="Qty"
                 class="qty"
                 size="4"
+                :value="item.qty"
               />
-              <input type="button" value="-" class="minus" />
+              <input
+                type="button"
+                value="-"
+                class="minus"
+                @click.prevent="decrementQty(item.product)"
+              />
             </div>
           </div>
           <div class="col-2 col-sm-2 col-md-2 text-right">
-            <button type="button" class="btn btn-outline-danger btn-xs">
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-xs"
+              @click.prevent="removeCart(item.product)"
+            >
               <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
           </div>
         </div>
-      </div> -->
+        <hr />
+      </div>
       <!-- END PRODUCT -->
     </div>
     <div class="card-footer card-footer-custom">
       <div class="text-light" style="margin: 5px">
-        Preço Total: <b>R$ 52,00</b>
+        Preço Total: <b>R$ {{ totalCart }}</b>
       </div>
       <a href="" class="btn btn-success">Finalizar</a>
     </div>
@@ -78,12 +96,28 @@
 
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   computed: {
     ...mapState({
       products: (state) => state.cart.products,
+    }),
+    totalCart() {
+      let total = 0;
+
+      this.products.map((itemCart, index) => {
+        total += itemCart.qty * itemCart.product.price;
+      });
+
+      return total;
+    },
+  },
+  methods: {
+    ...mapMutations({
+      removeCart: "REMOVE_PROD_CART",
+      incrementQty: "INCREMENT_QTY_PROD_CART",
+      decrementQty: "DECREMENT_QTY_PROD_CART",
     }),
   },
 };
