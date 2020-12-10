@@ -25,6 +25,7 @@
               class="form-control input_user"
               value=""
               placeholder="Nome"
+              v-model="formData.name"
             />
           </div>
           <div class="input-group mb-3">
@@ -39,6 +40,7 @@
               class="form-control input_user"
               value=""
               placeholder="E-mail"
+              v-model="formData.email"
             />
           </div>
           <div class="input-group mb-2">
@@ -51,11 +53,19 @@
               class="form-control input_pass"
               value=""
               placeholder="Senha"
+              v-model="formData.password"
             />
           </div>
           <div class="d-flex justify-content-center mt-3 login_container">
-            <button type="button" name="button" class="btn login_btn">
-              Cadastrar
+            <button
+              type="button"
+              name="button"
+              class="btn login_btn"
+              :disabled="loading"
+              @click.prevent="registerClient"
+            >
+              <span v-if="loading">Cadastrar...</span>
+              <span v-else>Cadastrar</span>
             </button>
           </div>
         </form>
@@ -71,3 +81,35 @@
   </div>
   <!-- login-->
 </template>
+
+
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      loading: false,
+      formData: {
+        name: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(["register"]),
+
+    registerClient() {
+      this.loading = true;
+
+      this.register(this.formData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => this.$vToastify.error("Falha ao Registrar", "Error"))
+        .finally(() => (this.loading = false));
+    },
+  },
+};
+</script>
