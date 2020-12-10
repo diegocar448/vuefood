@@ -14,7 +14,10 @@
         </div>
       </div>
       <div class="d-flex justify-content-center form_container">
-        <form>
+        <form @submit.prevent="registerClient">
+          <div class="text-danger" v-if="errors.name != ''">
+            {{ errors.name[0] || "" }}
+          </div>
           <div class="input-group mb-3">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -22,11 +25,18 @@
             <input
               type="text"
               name=""
-              class="form-control input_user"
+              :class="[
+                'form-control',
+                'input_user',
+                { 'is-invalid': errors.name != '' },
+              ]"
               value=""
               placeholder="Nome"
               v-model="formData.name"
             />
+          </div>
+          <div class="text-danger" v-if="errors.email != ''">
+            {{ errors.email[0] || "" }}
           </div>
           <div class="input-group mb-3">
             <div class="input-group-append">
@@ -37,11 +47,18 @@
             <input
               type="text"
               name=""
-              class="form-control input_user"
+              :class="[
+                'form-control',
+                'input_user',
+                { 'is-invalid': errors.email != '' },
+              ]"
               value=""
               placeholder="E-mail"
               v-model="formData.email"
             />
+          </div>
+          <div class="text-danger" v-if="errors.password != ''">
+            {{ errors.password[0] || "" }}
           </div>
           <div class="input-group mb-2">
             <div class="input-group-append">
@@ -50,7 +67,11 @@
             <input
               type="password"
               name=""
-              class="form-control input_pass"
+              :class="[
+                'form-control',
+                'input_user',
+                { 'is-invalid': errors.password != '' },
+              ]"
               value=""
               placeholder="Senha"
               v-model="formData.password"
@@ -58,11 +79,10 @@
           </div>
           <div class="d-flex justify-content-center mt-3 login_container">
             <button
-              type="button"
+              type="submit"
               name="button"
               class="btn login_btn"
               :disabled="loading"
-              @click.prevent="registerClient"
             >
               <span v-if="loading">Cadastrar...</span>
               <span v-else>Cadastrar</span>
@@ -95,6 +115,11 @@ export default {
         email: "",
         password: "",
       },
+      errors: {
+        name: "",
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
@@ -105,10 +130,38 @@ export default {
 
       this.register(this.formData)
         .then((response) => {
-          console.log(response);
+          this.$vToastify.success(
+            "Cadastro realizado com sucesso!",
+            "Parabéns"
+          );
+          this.$router.push({ name: "login" });
         })
-        .catch((error) => this.$vToastify.error("Falha ao Registrar", "Error"))
+        .catch((error) => {
+          const errorResponse = error.response;
+
+          if (errorResponse.status === 422) {
+            this.errors = Object.assign(this.errors, errorResponse.data.errors);
+
+            this.$vToastify.error(
+              "Dados inválidos, verifique novamente",
+              "Erro"
+            );
+
+            setTimeout(() => this.reset(), 4000);
+            return;
+          }
+
+          this.$vToastify.error("Falha ao Registrar", "Erro");
+        })
         .finally(() => (this.loading = false));
+    },
+
+    reset() {
+      this.errors = {
+        name: "",
+        email: "",
+        password: "",
+      };
     },
   },
 };
