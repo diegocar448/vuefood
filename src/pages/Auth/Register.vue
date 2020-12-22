@@ -84,7 +84,7 @@
               class="btn login_btn"
               :disabled="loading"
             >
-              <span v-if="loading">Cadastrar...</span>
+              <span v-if="loading">Cadastrando...</span>
               <span v-else>Cadastrar</span>
             </button>
           </div>
