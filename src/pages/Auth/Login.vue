@@ -130,8 +130,8 @@ export default {
             "Authenticaçao realizada com sucesso!",
             "Parabéns"
           );
-          alert("ok");
-          this.$router.push({ name: "login" });
+          //alert("ok");
+          this.$router.push({ name: "home" });
         })
         .catch((error) => {
           const errorResponse = error.response;

@@ -38,13 +38,31 @@ export default {
             return axios.post('auth/register', params)
         },
 
-        login({ commit }, params) {
+        login({ commit, dispatch }, params) {
             return axios.post('auth/token', params)
                 .then(response => {
                     const token = response.data.token
 
                     localStorage.setItem(TOKEN_NAME, token)
+
+                    dispatch('getMe')
                 })
         },
+        getMe({ commit }) {
+            const token = localStorage.getItem(TOKEN_NAME)
+
+            if (!token) return
+
+            return axios.get('auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    commit('SET_ME', response.data.data)
+                })
+                .catch(error => localStorage.remoteItem(TOKEN_NAME))
+
+        }
     }
 }

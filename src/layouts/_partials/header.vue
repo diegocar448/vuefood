@@ -20,7 +20,9 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'login' }" class="nav-link">
+                <a v-if="me.name" class="nav-link">Olá {{ me.name }}!</a>
+
+                <router-link v-else :to="{ name: 'login' }" class="nav-link">
                   Entrar
                 </router-link>
               </li>
@@ -40,6 +42,8 @@ export default {
     ...mapState({
       /* Pegar para mostrar a qtd de produtos no carrinho */
       productsCart: (state) => state.cart.products,
+      /* Mapear o usuario quando for autenticado */
+      me: (state) => state.auth.me,
     }),
   },
 };
