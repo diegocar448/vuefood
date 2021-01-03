@@ -5,6 +5,7 @@ import { state, mutations } from "./default";
 import companies from "./modules/companies";
 import cart from "./modules/cart/cart";
 import auth from "./modules/auth/auth";
+import orders from "./modules/orders/orders";
 
 /* 
 Assim o Vue usará o Vuex
@@ -19,6 +20,7 @@ const store = new Vuex.Store({
         companies,
         cart,
         auth,
+        orders,
     },
     state,
     mutations

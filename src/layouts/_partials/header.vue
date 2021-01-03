@@ -20,7 +20,13 @@
                 </router-link>
               </li>
               <li class="nav-item">
-                <a v-if="me.name" class="nav-link">Olá {{ me.name }}!</a>
+                <router-link
+                  :to="{ name: 'my.orders' }"
+                  v-if="me.name"
+                  class="nav-link"
+                >
+                  Olá {{ me.name }} (<span @click.prevent="logout">Sair</span>)!
+                </router-link>
 
                 <router-link v-else :to="{ name: 'login' }" class="nav-link">
                   Entrar
@@ -35,7 +41,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
@@ -45,6 +51,10 @@ export default {
       /* Mapear o usuario quando for autenticado */
       me: (state) => state.auth.me,
     }),
+  },
+
+  methods: {
+    ...mapActions(["logout"]),
   },
 };
 </script>

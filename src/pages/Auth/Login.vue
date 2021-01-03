@@ -130,7 +130,7 @@ export default {
             "Authenticaçao realizada com sucesso!",
             "Parabéns"
           );
-          //alert("ok");
+          //redireciona para home
           this.$router.push({ name: "home" });
         })
         .catch((error) => {
