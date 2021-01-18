@@ -42,35 +42,20 @@
         <h4>Produtos</h4>
       </div>
 
-      <div class="col-6 my-1">
+      <div
+        class="col-6 my-1"
+        v-for="(product, index) in order.products"
+        :key="index"
+      >
         <div class="restaurant-card">
-          <a href="vitrine-tenant.html"
-            ><img class="card-img-top" src="imgs/pizza.png" alt=""
+          <a href="#"
+            ><img
+              class="card-img-top"
+              :src="product.image"
+              :alt="product.title"
           /></a>
           <div class="restaurant-card-body">
-            <h5>Pizza</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-6 my-1">
-        <div class="restaurant-card">
-          <a href="vitrine-tenant.html"
-            ><img class="card-img-top" src="imgs/pizza.png" alt=""
-          /></a>
-          <div class="restaurant-card-body">
-            <h5>Pizza</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-6 my-1">
-        <div class="restaurant-card">
-          <a href="vitrine-tenant.html"
-            ><img class="card-img-top" src="imgs/pizza.png" alt=""
-          /></a>
-          <div class="restaurant-card-body">
-            <h5>Pizza</h5>
+            <h5>{{ product.title }}</h5>
           </div>
         </div>
       </div>
@@ -81,10 +66,22 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: ["identify"],
   created() {
-    console.log(this.identify);
+    this.getOrderByIdentify(this.identify)
+      .then(
+        (response) =>
+          (this.order = Object.assign(this.order, response.data.data))
+      )
+
+      .catch((error) => {
+        this.$vToastify.error("Falha ao carregar detalhers do pedido", "Erro");
+
+        this.$router.push({ name: "home" });
+      });
   },
 
   date() {
@@ -110,6 +107,9 @@ export default {
         evaluations: [],
       },
     };
+  },
+  methods: {
+    ...mapActions(["getOrderByIdentify"]),
   },
 };
 </script>
