@@ -6,41 +6,17 @@
     </div>
 
     <div class="row my-4">
-      <div class="col-sm-6 my-4">
+      <div
+        class="col-sm-6 my-4"
+        v-for="(order, index) in myOrders.data"
+        :key="index"
+      >
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Pedido: <strong>KsjjR2</strong></h5>
-            <p class="card-text">Data: 22/12/2021</p>
-            <a href="detalhes-pedido.html" class="btn btn-danger">Detalhes</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 my-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Pedido: <strong>KsjjR2</strong></h5>
-            <p class="card-text">Data: 22/12/2021</p>
-            <a href="detalhes-pedido.html" class="btn btn-danger">Detalhes</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 my-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Pedido: <strong>KsjjR2</strong></h5>
-            <p class="card-text">Data: 22/12/2021</p>
-            <a href="detalhes-pedido.html" class="btn btn-danger">Detalhes</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 my-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Pedido: <strong>KsjjR2</strong></h5>
-            <p class="card-text">Data: 22/12/2021</p>
+            <h5 class="card-title">
+              Pedido: <strong>{{ order.identify }}</strong>
+            </h5>
+            <p class="card-text">Data: {{ order.date }}</p>
             <a href="detalhes-pedido.html" class="btn btn-danger">Detalhes</a>
           </div>
         </div>
@@ -59,6 +35,11 @@ export default {
     this.getMyOrders().catch(() =>
       this.$vToastify.error("Falha ao buscar os pedidos", "Erro")
     );
+  },
+  computed: {
+    ...mapState({
+      myOrders: (state) => state.orders.myOrders,
+    }),
   },
 
   methods: {
