@@ -130,8 +130,8 @@ export default {
             "Authenticaçao realizada com sucesso!",
             "Parabéns"
           );
-          //redireciona para home
-          this.$router.push({ name: "home" });
+          //redireciona para myorders
+          this.$router.push({ name: "my.orders" });
         })
         .catch((error) => {
           const errorResponse = error.response;
@@ -148,7 +148,7 @@ export default {
             return;
           }
 
-          this.$vToastify.error("Falha ao Registrar", "Erro");
+          this.$vToastify.error("Falha ao Autenticar", "Erro");
         })
         .finally(() => (this.loading = false));
     },
