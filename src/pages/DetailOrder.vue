@@ -61,15 +61,49 @@
       </div>
     </div>
     <!-- products order -->
+    <!-- Evaluations -->
+    <hr />
+    <button
+      class="btn btn-success"
+      @v-if="me.name != '' && me.name === order.client.name"
+      @click.prevent="openModalEvaluation"
+    >
+      Avaliar o pedido
+    </button>
+
+    <modal name="evaluation-order" :heigth="350">
+      <div class="px-md-5 my-4">
+        <h1>Avaliar o pedido {{ identify }}</h1>
+        <div class="form-group">
+          <textarea
+            class="form-control"
+            name="comment"
+            id=""
+            cols="30"
+            rows="3"
+            placeholder="Comentário (Opcional)"
+          ></textarea>
+          <button class="btn btn-info">Avaliar</button>
+        </div>
+      </div>
+    </modal>
+    <!-- /.Evaluations -->
   </div>
   <!-- /.container -->
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   props: ["identify"],
+
+  computed: {
+    ...mapState({
+      me: (state) => state.auth.me,
+    }),
+  },
+
   created() {
     this.getOrderByIdentify(this.identify)
       .then(
@@ -110,6 +144,14 @@ export default {
   },
   methods: {
     ...mapActions(["getOrderByIdentify"]),
+
+    openModalEvaluation() {
+      this.$modal.show("evaluation-order");
+    },
+
+    closeModalEvaluation() {
+      this.$modal.hide("evaluation-order");
+    },
   },
 };
 </script>
