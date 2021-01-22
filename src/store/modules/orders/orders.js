@@ -45,7 +45,6 @@ const actions = {
     getOrderByIdentify({ commit }, identify) {
         commit('SET_PRELOADER', true)
         commit('SET_TEXT_PRELOADER', 'Carregando os detalhes do pedido')
-
         return axios.get(`${API_VERSION}/orders/${identify}`)
             .finally(() => commit('SET_PRELOADER', false))
     },
@@ -60,6 +59,45 @@ const actions = {
                 'Authorization': `Bearer ${token}`
             }
         })
+    },
+
+
+    createOrder({ commit }, params) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${API_VERSION}/orders`, params)
+                .then(response => {
+                    commit('CLEAR_CART')
+
+                    resolve(response.data.data)
+                })
+                .catch(response => reject(response.error))
+
+
+        })
+
+
+    },
+    createOrderAuthenticated({ commit }, params) {
+
+        return new Promise((resolve, reject) => {
+            const token = localStorage.getItem(TOKEN_NAME)
+            if (!token) reject()
+
+            axios.post(`auth/${API_VERSION}/orders`, params, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    commit('CLEAR_CART')
+
+                    resolve(response.data.data)
+                }).catch(response => reject(response.error))
+        })
+
+
+
+
     }
 }
 

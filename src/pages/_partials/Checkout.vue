@@ -3,7 +3,10 @@
     <div class="text-light" style="margin: 5px">
       Preço Total: <b>{{ totalCart }}</b>
     </div>
-    <a href="#" class="btn btn-success" @click.prevent="openModalCheckout"
+    <a
+      href="#"
+      class="btn btn-success btn-full"
+      @click.prevent="openModalCheckout"
       >Finalizar</a
     >
 
@@ -24,8 +27,15 @@
               cols="30"
               rows="2"
               placeholder="Comentário (Opcional)"
+              v-model="comment"
             ></textarea>
-            <button class="btn btn-success">Fazer Pedido</button>
+            <br />
+            <button
+              class="btn btn-success btn-full"
+              @click.prevent="createOrder"
+            >
+              Fazer Pedido
+            </button>
           </div>
         </div>
 
@@ -46,9 +56,10 @@
                 cols="30"
                 rows="2"
                 placeholder="Comentário (Opcional)"
+                v-model="comment"
               ></textarea>
             </div>
-            <button class="btn btn-light btn-full">
+            <button class="btn btn-light btn-full" @click.prevent="createOrder">
               Fazer Pedido de Forma Anônima
             </button>
           </div>
@@ -64,13 +75,14 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   computed: {
     ...mapState({
       products: (state) => state.cart.products,
       me: (state) => state.auth.me,
+      company: (state) => state.companies.companySelected,
     }),
     totalCart() {
       let total = 0;
@@ -82,8 +94,35 @@ export default {
       return total;
     },
   },
+  data() {
+    return {
+      comment: "",
+    };
+  },
 
   methods: {
+    ...mapActions(["createOrder", "createOrderAuthenticated"]),
+
+    createOrder() {
+      const action =
+        this.me.name === "" ? "createOrder" : "createOrderAuthenticated";
+
+      let params = {
+        token_company: this.company.uuid,
+        comment: this.comment,
+        products: [...this.products],
+      };
+
+      this.$store
+        .dispatch(action, params)
+        .then((response) => {
+          this.$vToastify.success("Pedido realizado com sucesso", "Parabéns");
+          this.$router.push({ name: "my.orders" });
+        })
+        .catch((error) => {
+          this.$vToastify.error("Falha ao realizar pedido", "Falha");
+        });
+    },
     openModalCheckout() {
       this.$modal.show("checkout");
     },
