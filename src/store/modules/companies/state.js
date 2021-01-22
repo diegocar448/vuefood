@@ -6,6 +6,10 @@ const state = {
         name: '',
         products: {
             data: []
+        },
+        tables: {
+            identify: '',
+            description: '',
         }
     },
 
