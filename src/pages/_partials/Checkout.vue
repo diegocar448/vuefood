@@ -11,7 +11,10 @@
     >
 
     <modal name="checkout">
-      <div class="px-md-5 my-4">
+      <div class="px-md-5 my-4" v-if="loading">
+        <p>Gerando o pedido... (aguarde)</p>
+      </div>
+      <div class="px-md-5 my-4" v-else>
         <div class="col-12" v-if="me.name !== ''">
           <p>
             Total de produtos: <strong>{{ products.length }}</strong>
@@ -97,6 +100,8 @@ export default {
   data() {
     return {
       comment: "",
+
+      loading: false,
     };
   },
 
@@ -104,6 +109,7 @@ export default {
     ...mapActions(["createOrder", "createOrderAuthenticated"]),
 
     createOrder() {
+      this.loading = true;
       const action =
         this.me.name === "" ? "createOrder" : "createOrderAuthenticated";
 
@@ -121,7 +127,8 @@ export default {
         })
         .catch((error) => {
           this.$vToastify.error("Falha ao realizar pedido", "Falha");
-        });
+        })
+        .finally(() => (this.loading = false));
     },
     openModalCheckout() {
       this.$modal.show("checkout");

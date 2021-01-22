@@ -16,9 +16,9 @@
           <li>
             Status: <span class="badge bg-success">{{ order.status }}</span>
           </li>
-          <li>
+          <li v-if="order.table.identify">
             Mesa:
-            <ul v-if="order.table.identify">
+            <ul>
               <li>Identificador: {{ order.table.identify }}</li>
               <li>Descrição: {{ order.table.description }}</li>
             </ul>
@@ -65,10 +65,10 @@
     <hr />
     <button
       class="btn btn-success"
-      @v-if="
+      v-if="
         me.name != '' &&
-          me.name === order.client.name &&
-          order.evaluations.length === 0
+        me.name === order.client.name &&
+        order.evaluations.length === 0
       "
       @click.prevent="openModalEvaluation"
     >
@@ -164,13 +164,13 @@ export default {
       )
 
       .catch((error) => {
-        this.$vToastify.error("Falha ao carregar detalhers do pedido", "Erro");
+        this.$vToastify.error("Falha ao carregar detalhes do pedido", "Erro");
 
         this.$router.push({ name: "home" });
       });
   },
 
-  date() {
+  data() {
     return {
       order: {
         identify: "",
@@ -222,6 +222,7 @@ export default {
 
       this.evalutionOrder()
         .then((response) => {
+          console.log("Entrou");
           this.$vToastify.success("Avaliação enviada com sucesso!", "Parabéns");
           this.order.evaluations.push(response.data.data);
           this.closeModalEvaluation();

@@ -1,6 +1,5 @@
 <template>
   <div>
-    auth template
     <!-- Page Content -->
     <div class="container container-body">
       <router-view></router-view>
