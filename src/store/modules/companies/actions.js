@@ -21,7 +21,7 @@ export default {
             .finally(() => commit('SET_PRELOADER', false))
     },
 
-    getCompaniesByToken({ commit }, token_company) {
+    getCompanyByToken({ commit }, token_company) {
 
         commit('SET_PRELOADER', true)
         commit('SET_TEXT_PRELOADER', 'Carregando a empresa')
@@ -68,7 +68,7 @@ export default {
         commit('SET_TEXT_PRELOADER', 'Carregando a mesa')
 
 
-        return axios.get(`${API_VERSION}/${RESOURCE}/tables/${params.table}`, params)
+        return axios.get(`${API_VERSION}/${RESOURCE}/tables/${params.table}`, { params })
             .then(response => {
                 commit('SET_TABLE_COMPANY', response.data.data)
             })

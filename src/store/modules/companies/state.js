@@ -10,6 +10,7 @@ const state = {
         tables: {
             identify: '',
             description: '',
+            name: '',
         }
     },
 
