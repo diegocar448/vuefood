@@ -8,6 +8,28 @@ export default {
         /* Usamos o Obhject.assing para mesclar valores antigos e novos, mantendo a estrutura completa e atualizada */
         state.companySelected = Object.assign(state.companySelected, company)
     },
+    REMOVE_COMPANY_SELECTED(state) {
+        state.companySelected = {
+            name: '',
+            products: {
+                data: []
+            },
+            table: {
+                identify: '',
+                description: '',
+                name: ''
+            }
+        },
+
+
+            state.categoriesCompanySelected = {
+                data: []
+            }
+
+
+
+
+    },
 
     SET_CATEGORIES_COMPANY(state, categories) {
         state.categoriesCompanySelected = categories
@@ -26,7 +48,9 @@ export default {
             description: '',
             name: ''
         }
-    }
+    },
+
+
 
 
 }
