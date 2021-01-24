@@ -4,7 +4,7 @@
       <h1 class="my-4 title-tenant">{{ company.name }}</h1>
 
       <h2 v-if="company.table.identify">
-        {{ company.table.name }}
+        Mesa: {{ company.table.name }}
         ( <a href="#" @click.prevent="removeTableCompany">x</a> )
       </h2>
       <div class="list-group">

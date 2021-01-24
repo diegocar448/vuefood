@@ -22,6 +22,9 @@
           <p>
             Preço total: <strong>{{ totalCart }}</strong>
           </p>
+          <p v-if="company.table.identify">
+            <strong>Mesa: </strong> {{ company.table.name }}
+          </p>
           <div class="form-group">
             <textarea
               class="form-control"
@@ -50,7 +53,9 @@
             <p>
               Preço total: <strong>{{ totalCart }}</strong>
             </p>
-
+            <p v-if="company.table.identify">
+              <strong>Mesa: </strong> {{ company.table.name }}
+            </p>
             <div class="form-group">
               <textarea
                 class="form-control"
@@ -118,6 +123,13 @@ export default {
         comment: this.comment,
         products: [...this.products],
       };
+
+      /* 
+        set table order
+      */
+      if (this.company.table.identify) {
+        params.table = this.company.table.identify;
+      }
 
       this.$store
         .dispatch(action, params)
