@@ -7,10 +7,10 @@ const state = {
         products: {
             data: []
         },
-        tables: {
+        table: {
             identify: '',
             description: '',
-            name: '',
+            name: ''
         }
     },
 

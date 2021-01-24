@@ -2,9 +2,10 @@
   <div class="row">
     <div class="col-lg-3">
       <h1 class="my-4 title-tenant">{{ company.name }}</h1>
-      <h2 v-if="company.table.identify !== ''">
+
+      <h2 v-if="company.table.identify">
         {{ company.table.name }}
-        (<a href="#" @click.prevent="removeTableCompany">x</a>)
+        ( <a href="#" @click.prevent="removeTableCompany">x</a> )
       </h2>
       <div class="list-group">
         <a href="#" :class="['list-group-item', categoryInFilter('')]">

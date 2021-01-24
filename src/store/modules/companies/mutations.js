@@ -21,7 +21,11 @@ export default {
         state.companySelected.table = table
     },
     REMOVE_TABLE_COMPANY(state, table) {
-        state.companySelected.table = table
+        state.companySelected.table = {
+            identify: '',
+            description: '',
+            name: ''
+        }
     }
 
 
