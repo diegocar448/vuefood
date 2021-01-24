@@ -10,4 +10,15 @@ const router = new VueRouter({
     routes
 })
 
+router.beforeEach((to, from, next) => {
+
+    document.title = "VueFood"
+
+    if (to.hasOwnProperty('meta')) {
+        document.title = to.meta.title
+    }
+
+    next();
+})
+
 export default router
