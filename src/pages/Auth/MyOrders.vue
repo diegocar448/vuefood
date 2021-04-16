@@ -16,7 +16,7 @@
             <h5 class="card-title">
               Pedido: <strong>{{ order.identify }}</strong>
             </h5>
-            <p class="card-text">Data: {{ order.date }}</p>
+            <p class="card-text">Data: {{ order.date | dateformat }}</p>
             <router-link
               :to="{
                 name: 'order.detail',
@@ -50,7 +50,7 @@ export default {
   computed: {
     ...mapState({
       myOrders: (state) => state.orders.myOrders,
-      me: state => state.auth.me,
+      me: (state) => state.auth.me,
     }),
   },
 

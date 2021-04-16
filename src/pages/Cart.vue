@@ -39,7 +39,7 @@
           >
             <h6>
               <strong
-                >R$ {{ item.product.price }}
+                >R$ {{ item.product.price | formatprice }}
                 <span class="text-muted">x</span></strong
               >
             </h6>

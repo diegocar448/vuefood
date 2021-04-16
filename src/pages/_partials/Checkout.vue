@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-light" style="margin: 5px">
-      Preço Total: <b>{{ totalCart }}</b>
+      Preço Total: <b>{{ totalCart | formatprice }}</b>
     </div>
     <a
       href="#"
@@ -20,7 +20,7 @@
             Total de produtos: <strong>{{ products.length }}</strong>
           </p>
           <p>
-            Preço total: <strong>{{ totalCart }}</strong>
+            Preço total: <strong>{{ totalCart | formatprice }}</strong>
           </p>
           <p v-if="company.table.identify">
             <strong>Mesa: </strong> {{ company.table.name }}
@@ -51,7 +51,7 @@
               Total de produtos: <strong>{{ products.length }}</strong>
             </p>
             <p>
-              Preço total: <strong>{{ totalCart }}</strong>
+              Preço total: <strong>{{ totalCart | formatprice }}</strong>
             </p>
             <p v-if="company.table.identify">
               <strong>Mesa: </strong> {{ company.table.name }}
